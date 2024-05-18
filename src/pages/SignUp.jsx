@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { redirect, useNavigate } from "react-router-dom";
+import { json, redirect, useNavigate } from "react-router-dom";
 import InputField from "../components/InputField";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -19,14 +19,14 @@ const Login = () => {
     e.preventDefault();
     try {
       const result = await axios({
-        url: "http://localhost:3000/users",
+        url: `${import.meta.env.VITE_BACKEND_URL}/users`,
         method: "post",
         data: user,
       });
-      console.log(result);
+      console.log("Resuult--------------<>",result);
 
-      if (result.data.status) {
-        toast.success(`${result.data.message}`);
+      if (result.status) {
+        toast.success(`${result.message}`);
         setUser({
           first_name: "",
           last_name: "",
@@ -35,7 +35,8 @@ const Login = () => {
           user_type: "seller",
           password: "",
         });
-        redirect("/home");
+        localStorage.setItem('user',JSON.stringify(result.data))
+        Navigate("/home");
       }
     } catch (error) {
       console.log(error);

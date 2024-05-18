@@ -1,16 +1,37 @@
+import axios from "axios";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-    const Navigate = useNavigate()
+  const Navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
 
-  const [employeeid, setEmployeeId] = useState("");
-  const [password, setPassword] = useState("");
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  });
 
-  const handleSubmit = () => {
+  const handleChange = (value, name) => {
+    setUser((prev) => {
+      return { ...prev, [name]: value };
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
-    } catch {}
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/login`, { email, password });
+
+      if (response.data.status) {
+        toast.success(response.data.message);
+        localStorage.setItem("user", JSON.stringify(response.data.user));
+        Navigate("/home");
+      }
+      toast.error(response.data.message);
+    } catch(error) {
+      toast.error(error);
+    }
   };
 
   // console.log(employeeid, password);
@@ -25,15 +46,17 @@ const Login = () => {
           <div className="text-center space-y-2">
             <h2 className="text-[#212121] text-2xl font-bold">Log-in</h2>
           </div>
-          <form onSubmit={handleSubmit} className="space-y-4 mt-12">
+          <div className="space-y-4 mt-12">
             <div className=" bg-white flex items-center border-[1px] border-[#757575] gap-3 p-5">
               <img src="/icons/icon-user.svg" />
               <input
                 className="h-[33px] outline-none w-full placeholder:text-[#424242] text-base"
                 placeholder="Email"
                 type="email"
-                onChange={(e) => setEmployeeId(e.target.value)}
-                value={employeeid}
+                name="email"
+                onChange={(e) => handleChange(e.target.value, e.target.name)}
+                value={user.email}
+                required
               />
             </div>
             <div className=" bg-white flex items-center border-[1px] border-[#757575] gap-3 p-5">
@@ -41,8 +64,10 @@ const Login = () => {
               <input
                 className="h-[33px] outline-none w-full placeholder:text-[#424242] text-base font-mono"
                 placeholder="********"
+                name="password"
                 type={showPassword ? "text" : "password"}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => handleChange(e.target.value, e.target.name)}
+                required
               />
               <p
                 onClick={() => setShowPassword(!showPassword)}
@@ -54,22 +79,36 @@ const Login = () => {
             <button
               type="submit"
               className="w-full p-5 bg-[#24243E] text-white flex justify-between"
+              onClick={handleSubmit}
             >
               Log-in
               <span>
                 <img src="/icons/arrow-right.svg" alt="arrow-icon" />
               </span>
             </button>
-          </form>
+          </div>
           <p className="text-center text-xs mt-3 font-normal">
             Having Issues with your Password?
           </p>
           <p className="text-center text-xs text-[#424242] mt-10 font-normal">
             Not an Buyer or Seller?{" "}
-            <span className="text-[#212121] text-sm font-semibold cursor-pointer" onClick={()=>{
-                Navigate("/signup")
-            }}>
+            <span
+              className="text-[#212121] text-sm font-semibold cursor-pointer"
+              onClick={() => {
+                Navigate("/signup");
+              }}
+            >
               JOIN NOW
+            </span>
+          </p>
+          <p className="text-center text-xs text-[#424242] mt-10 font-normal">
+            <span
+              className="text-[#212121] text-sm font-semibold cursor-pointer"
+              onClick={() => {
+                Navigate("/home");
+              }}
+            >
+              Login Later
             </span>
           </p>
         </div>
@@ -78,4 +117,4 @@ const Login = () => {
   );
 };
 
-export default Login
+export default Login;
