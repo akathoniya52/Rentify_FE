@@ -1,35 +1,23 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  const Navigate = useNavigate()
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="bg-gray-100 min-h-screen flex justify-center items-center">
+      <div className="max-w-md px-8 py-12 bg-white shadow-lg rounded-lg">
+        <h1 className="text-3xl font-semibold text-gray-800 mb-4">Welcome to Rentify</h1>
+        <p className="text-gray-600 mb-6">Your one-stop platform for renting and finding properties.</p>
+        <div className="flex justify-center">
+          <button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:ring focus:ring-blue-300" onClick={()=>{
+            Navigate('/login')
+          }}>
+            Get Started
+          </button>
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;
