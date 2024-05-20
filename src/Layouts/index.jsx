@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createContext, useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { Outlet } from "react-router-dom";
 // import Sidebar from "../Components/Sidebar";
@@ -6,8 +6,8 @@ import { Outlet } from "react-router-dom";
 
 export const MainLayout = () => {
   return (
-    <div>
-    <Toaster position="top-center" containerStyle={{ zIndex: 99999 }} />
+      <div>
+      <Toaster position="top-center" containerStyle={{ zIndex: 99999 }} />
       
       <Outlet />
     </div>

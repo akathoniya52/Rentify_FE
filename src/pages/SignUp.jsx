@@ -23,9 +23,9 @@ const Login = () => {
         method: "post",
         data: user,
       });
-      console.log("Resuult--------------<>",result);
+      // console.log("Resuult--------------<>",result);
 
-      if (result.status) {
+      if (result.data.status) {
         toast.success(`${result.message}`);
         setUser({
           first_name: "",
@@ -35,7 +35,9 @@ const Login = () => {
           user_type: "seller",
           password: "",
         });
-        localStorage.setItem('user',JSON.stringify(result.data))
+        const user = result.data.user;
+        delete user.password_hash;
+        localStorage.setItem('user',JSON.stringify(user))
         Navigate("/home");
       }
     } catch (error) {

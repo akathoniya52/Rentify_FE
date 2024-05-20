@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const Navigate = useNavigate();
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
 
   const [user, setUser] = useState({
@@ -21,20 +21,33 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/login`, { email, password });
-
-      if (response.data.status) {
-        toast.success(response.data.message);
-        localStorage.setItem("user", JSON.stringify(response.data.user));
-        Navigate("/home");
+      const response = await axios({
+        url: `${import.meta.env.VITE_BACKEND_URL}/login`,
+        method: "post",
+        data: user,
+      });
+      // console.log("response----->", response);
+      if (response.data.status===true) {
+        toast.success("User Logged In SuccessFully.!");
+        const user = response.data.user;
+        delete user.password_hash;
+        localStorage.setItem("user", JSON.stringify(user));
+        setUser({
+          email: "",
+          password: "",
+        })
+        navigate("/home");                  
+      } else {
+        toast.error(response.data.message);
       }
-      toast.error(response.data.message);
-    } catch(error) {
-      toast.error(error);
+    } catch (error) {
+      if (error.response && error.response.data) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error("An error occurred");
+      }
     }
   };
-
-  // console.log(employeeid, password);
 
   return (
     <div className="flex bg-[#F9F9FA] h-screen">
@@ -67,6 +80,7 @@ const Login = () => {
                 name="password"
                 type={showPassword ? "text" : "password"}
                 onChange={(e) => handleChange(e.target.value, e.target.name)}
+                value={user.password} // Ensure the value is linked to the state
                 required
               />
               <p
@@ -95,7 +109,7 @@ const Login = () => {
             <span
               className="text-[#212121] text-sm font-semibold cursor-pointer"
               onClick={() => {
-                Navigate("/signup");
+                navigate("/signup");
               }}
             >
               JOIN NOW
@@ -105,7 +119,7 @@ const Login = () => {
             <span
               className="text-[#212121] text-sm font-semibold cursor-pointer"
               onClick={() => {
-                Navigate("/home");
+                navigate("/home");
               }}
             >
               Login Later

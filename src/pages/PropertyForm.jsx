@@ -2,23 +2,23 @@
 import axios from "axios";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { redirect, useNavigate } from "react-router-dom";
 
 function PropertyForm() {
   const Navigate = useNavigate()
   const user = JSON.parse(localStorage.getItem("user"));
   // const { user_id, title, description, location, area, bedrooms, bathrooms, amenities, price } = req.body;
-
+  
   const [formData, setFormData] = useState({
-    user_id: user.user.user_id,
+    user_id: user.user_id,
     title: "",
     description: "",
     location: "",
     area: "",
-    bedrooms: "",
-    bathrooms: "",
+    bedrooms: 0,
+    bathrooms: 0,
     amenities: "",
-    price: "",
+    price: 0,
   });
 
   const handleChange = (e) => {

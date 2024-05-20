@@ -1,15 +1,14 @@
 // HomePage.js
 import React, { useState, useEffect } from "react";
 import PropertyCard from "../components/PropertyCard";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import toast from "react-hot-toast";
+import toast from 'react-hot-toast'
+import Navbar from "../components/Navbar";
+
 
 function Home() {
   const [properties, setProperties] = useState([]);
-  const [toggle, setToggle] = useState(false);
-  const Navigate = useNavigate();
-  const [loading, setLoading] = useState(false)
+
 
   useEffect(() => {
     // Fetch property data from backend API
@@ -17,12 +16,21 @@ function Home() {
     // Replace the above line with your actual data fetching logic
     // Dummy data for testing
     (async () => {
-      setLoading(true)
       try {
         const response = await axios({
           method: "get",
           url: `${import.meta.env.VITE_BACKEND_URL}/properties`,
         });
+        // console.log("Response----------------->",response)
+        toast.promise(
+          Promise.resolve(response), 
+
+           {
+             loading: 'Getting...',
+             success: <b>Properties get SuccessFully!</b>,
+             error: <b>Could not Get.</b>,
+           }
+         );
         if (response.data.status) {
           setProperties(response.data.properties);
           toast.success("get all the Properties...!");
@@ -30,7 +38,6 @@ function Home() {
       } catch (error) {
         toast.error("Something went wrong...!");
       }
-      setLoading(false)
     })();
     // const dummyData = [
     //   { id: 1, title: 'Beautiful Apartment', location: 'New York', bedrooms: 2, bathrooms: 1, price: 2000, imageUrl: 'https://via.placeholder.com/300' },
@@ -39,33 +46,14 @@ function Home() {
     // ];
     // setProperties(dummyData);
   }, []);
-  if(loading){
-    return <div>Loading...!</div>
-  }
 
-  const user = JSON.parse(localStorage.getItem("user"));
+
+  
+
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="flex justify-between">
-        <h1 className="text-3xl font-semibold text-gray-800 mb-8">
-          Explore Properties
-        </h1>
-        <div>
-          {user.user ? (
-            <div onClick={() => setToggle(!toggle)}>
-              Hello, {user.user.first_name}
-            </div>
-          ) : (
-            <div>Login</div>
-          )}
-          {toggle && (
-            <div>
-              <div onClick={() => Navigate("/profile")}>Go to Profile</div>
-            </div>
-          )}
-        </div>
-      </div>
+      <Navbar />
       {properties.length >= 0 && (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {properties.map((property,index) => (
