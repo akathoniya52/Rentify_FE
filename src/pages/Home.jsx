@@ -8,6 +8,7 @@ import Navbar from "../components/Navbar";
 
 function Home() {
   const [properties, setProperties] = useState([]);
+  console.log(properties)
 
 
   useEffect(() => {
