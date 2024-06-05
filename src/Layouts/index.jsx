@@ -6,7 +6,7 @@ import { Outlet } from "react-router-dom";
 
 export const MainLayout = () => {
   return (
-      <div>
+      <div className="bg-slate-200">
       <Toaster position="top-center" containerStyle={{ zIndex: 99999 }} />
       
       <Outlet />

@@ -1,7 +1,6 @@
 import React from "react";
 
 import { 
-  
   Route,
   createBrowserRouter,
   createRoutesFromElements,
@@ -17,6 +16,7 @@ import PropertyForm from "../pages/PropertyForm";
 import { ErrorPage } from "../pages/ErrorPage";
 import { getUser } from "../loaders/loader";
 import ProtectedLayout from "../Layouts/ProtectedLayout";
+import Property from "../pages/Property";
 // import PropertyListingPage from './pages/PropertyListingPage';
 // import PropertyDetailPage from './pages/PropertyDetailPage';
 // import UserProfilePage from './pages/UserProfilePage';
@@ -36,6 +36,7 @@ export const router = createBrowserRouter(
         <Route path="signup" element={<SignUp />} />
         <Route path="home" element={<Home />} />
         <Route path="profile" element={<Profile />} />
+        <Route path="property/:id" element={<Property />} />
         <Route path="" loader={getUser} element={<ProtectedLayout/>}>
           <Route path="add-property" element={<PropertyForm />} />
         </Route>

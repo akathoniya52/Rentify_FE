@@ -3,12 +3,13 @@ import axios from "axios";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { redirect, useNavigate } from "react-router-dom";
+import InputWithLabel from "../components/InputWithLabel";
 
 function PropertyForm() {
-  const Navigate = useNavigate()
+  const Navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user"));
   // const { user_id, title, description, location, area, bedrooms, bathrooms, amenities, price } = req.body;
-  
+
   const [formData, setFormData] = useState({
     user_id: user.user_id,
     title: "",
@@ -36,9 +37,9 @@ function PropertyForm() {
       const result = await axios({
         url: `${import.meta.env.VITE_BACKEND_URL}/properties`,
         method: "post",
-        data:formData
+        data: formData,
       });
-      console.log(result)
+      console.log(result);
 
       if (result.data.status) {
         toast.success("Property post Successfully");
@@ -52,9 +53,8 @@ function PropertyForm() {
           amenities: "",
           price: "",
         });
-        Navigate('/home')
+        Navigate("/home");
       }
-
     } catch (error) {
       toast.error("add Property failed...");
     }
@@ -66,74 +66,81 @@ function PropertyForm() {
         Add New Property
       </h1>
       <form onSubmit={handleSubmit}>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <input
-            type="text"
+        <div className="grid grid-cols-1 gap-4">
+          <InputWithLabel
+            label="Property title"
             name="title"
+            type="text"
             value={formData.title}
-            onChange={handleChange}
-            placeholder="Title"
-            className="input-field"
-            required
+            handleChange={handleChange}
+            placeholder="title"
           />
-          <input
+
+          <InputWithLabel
+            label="Property Description"
             type="text"
             name="description"
             value={formData.description}
-            onChange={handleChange}
+            handleChange={handleChange}
             placeholder="Description"
             className="input-field"
             required
           />
-          <input
+          <InputWithLabel
+            label="Property Location"
             type="text"
             name="location"
             value={formData.location}
-            onChange={handleChange}
+            handleChange={handleChange}
             placeholder="Location"
             className="input-field"
             required
           />
-          <input
+          <InputWithLabel
+            label="Area of the Property in ( sqft )"
             type="number"
             name="area"
             value={formData.area}
-            onChange={handleChange}
+            handleChange={handleChange}
             placeholder="Area (sqft)"
             className="input-field"
             required
           />
-          <input
+          <InputWithLabel
+            label="Enter no. of Bedrooms"
             type="number"
             name="bedrooms"
             value={formData.bedrooms}
-            onChange={handleChange}
+            handleChange={handleChange}
             placeholder="Bedrooms"
             className="input-field"
           />
-          <input
+          <InputWithLabel
+            label="Enter no. of Bathrooms"
             type="number"
             name="bathrooms"
             value={formData.bathrooms}
-            onChange={handleChange}
+            handleChange={handleChange}
             placeholder="Bathrooms"
             className="input-field"
             required
           />
-          <input
+          <InputWithLabel
+            label="Enter no. of Amenities"
             type="text"
             name="amenities"
             value={formData.amenities}
-            onChange={handleChange}
+            handleChange={handleChange}
             placeholder="Amenities"
             className="input-field"
             required
           />
-          <input
+          <InputWithLabel
+            label="Enter Price of the Property"
             type="number"
             name="price"
             value={formData.price}
-            onChange={handleChange}
+            handleChange={handleChange}
             placeholder="Price"
             className="input-field"
             required

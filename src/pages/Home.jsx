@@ -21,19 +21,14 @@ function Home() {
           method: "get",
           url: `${import.meta.env.VITE_BACKEND_URL}/properties`,
         });
-        // console.log("Response----------------->",response)
-        toast.promise(
-          Promise.resolve(response), 
-
-           {
-             loading: 'Getting...',
-             success: <b>Properties get SuccessFully!</b>,
-             error: <b>Could not Get.</b>,
-           }
-         );
+        console.log(response.data.properties)
         if (response.data.status) {
-          setProperties(response.data.properties);
-          toast.success("get all the Properties...!");
+          if(response.data.properties.length>0){
+            setProperties(response.data.properties);
+            toast.success("Get all the Properties...!");
+          }else{
+            toast("No, Properties Found....!")
+          }
         }
       } catch (error) {
         toast.error("Something went wrong...!");
@@ -52,8 +47,10 @@ function Home() {
 
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <>
       <Navbar />
+
+    <div className="container mx-auto px-4 py-8 ">
       {properties.length >= 0 && (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {properties.map((property,index) => (
@@ -63,7 +60,9 @@ function Home() {
           ))}
         </div>
       )}
+
     </div>
+    </>
   );
 }
 

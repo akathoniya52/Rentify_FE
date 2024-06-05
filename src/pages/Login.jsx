@@ -26,8 +26,9 @@ const Login = () => {
         method: "post",
         data: user,
       });
-      // console.log("response----->", response);
+      console.log("response----->", response);
       if (response.data.status===true) {
+        localStorage.setItem("token",response.data.token)
         toast.success("User Logged In SuccessFully.!");
         const user = response.data.user;
         delete user.password_hash;
@@ -50,9 +51,9 @@ const Login = () => {
   };
 
   return (
-    <div className="flex bg-[#F9F9FA] h-screen">
+    <div className="flex h-screen bg-slate-200">
       <div className="bg-loginbg w-[40vw] px-10 md:flex justify-center items-center hidden ">
-        <img src="./Logo-light.svg" />
+        <img src="./rentify-logo.svg" />
       </div>
       <div className="flex w-full items-center justify-center">
         <div className="lg:w-[30vw]">

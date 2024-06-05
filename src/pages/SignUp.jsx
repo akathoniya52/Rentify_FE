@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { json, redirect, useNavigate } from "react-router-dom";
+import { Link, json, redirect, useNavigate } from "react-router-dom";
 import InputField from "../components/InputField";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -37,6 +37,7 @@ const Login = () => {
         });
         const user = result.data.user;
         delete user.password_hash;
+        localStorage.setItem("token",result.data.token)
         localStorage.setItem('user',JSON.stringify(user))
         Navigate("/home");
       }
@@ -46,17 +47,6 @@ const Login = () => {
     }
   };
 
-  // model User {
-  //   first_name            String
-  //   last_name             String
-  //   email                 String              @unique
-  //   phone_number          String
-  //   user_type             UserType
-  //  password
-  // }
-
-  // console.log(employeeid, password);
-
   const handleChange = (value, name) => {
     setUser((prev) => {
       return { ...prev, [name]: value };
@@ -65,7 +55,10 @@ const Login = () => {
   console.log(user);
 
   return (
-    <div className="flex bg-[#F9F9FA] min-h-screen">
+    <div className="flex bg-slate-200 min-h-screen">
+      <div className="bg-loginbg w-[40vw] px-10 md:flex justify-center items-center hidden ">
+        <img src="./rentify-logo.svg" />
+      </div>
       <div className="flex w-full items-center justify-center">
         <div className="lg:w-[30vw]">
           <div className="text-center space-y-2">
@@ -104,7 +97,7 @@ const Login = () => {
             <div className=" bg-white flex items-center border-[1px] border-[#757575] gap-3 p-5">
               <select
                 id="userType"
-                className="h-[33px] outline-none w-full placeholder:text-[#424242] text-base"
+                className="h-[33px] outline-none w-full placeholder:text-[#424242] text-base bg-white"
                 value={user.user_type}
                 name="user_type"
                 onChange={(e) => handleChange(e.target.value, e.target.name)}
@@ -134,6 +127,7 @@ const Login = () => {
               </span>
             </button>
           </form>
+          <div className="text-center p-4">Already have account ? <Link to="/login">Login</Link> </div>
         </div>
       </div>
     </div>

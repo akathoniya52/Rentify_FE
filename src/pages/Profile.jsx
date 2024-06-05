@@ -33,28 +33,30 @@ function Profile() {
   }, []);
 
   return (
-    <div className="container mx-auto px-4 py-8 flex flex-col gap-8">
-      <div className="flex justify-between items-center">
+    <>
+      <div className="flex justify-between items-center p-4 md:p-6 lg:p-8 shadow-lg">
         <h1 className="text-3xl font-semibold text-gray-800 mb-8">Profile</h1>
         {user.user_type == "seller" && (
-          <div onClick={() => Navigate("/add-property")}>
+          <div onClick={() => Navigate("/add-property")} className="cursor-pointer">
             Create New Property Post
           </div>
         )}
       </div>
-      <div>
-        <ProfilePage user={user} />
+      <div className="container mx-auto px-4 py-8 flex flex-col gap-8 ">
+        <div>
+          <ProfilePage user={user} />
+        </div>
+        <div className="flex gap-4 flex-wrap">
+          {properties.length >= 0 && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {properties.map((property) => (
+                <PropertyCard key={property.id} property={property} />
+              ))}
+            </div>
+          )}
+        </div>
       </div>
-      <div className="flex gap-4 flex-wrap">
-        {properties.length >= 0 && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {properties.map((property) => (
-              <PropertyCard key={property.id} property={property} />
-            ))}
-          </div>
-        )}
-      </div>
-    </div>
+    </>
   );
 }
 

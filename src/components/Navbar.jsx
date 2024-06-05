@@ -12,14 +12,14 @@ const Navbar = () => {
   };
 
   return (
-    <div className="flex justify-between">
-      <h1 className="text-3xl font-semibold text-gray-800 mb-8">
+    <div className="flex justify-between p-4 md:p-6 lg:p-8 shadow-lg bg-slate-200">
+      <h1 className="text-3xl font-semibold text-gray-800">
         Explore Properties
       </h1>
-      <div>
+      <div className="relative"> 
         {user ? (
           <div onClick={() => setToggle(!toggle)} className="cursor-pointer">
-            Hello, {user.first_name}
+            Hello, <b>{user.first_name}</b>
           </div>
         ) : (
           <div onClick={() => Navigate("/login")} className="cursor-pointer">
@@ -27,7 +27,7 @@ const Navbar = () => {
           </div>
         )}
         {toggle && (
-          <div>
+          <div className="absolute shadow-xl border border-slate-400 bg-slate-200 p-2 rounded-md -left-8 ">
             <div
               onClick={() => Navigate("/profile")}
               className="cursor-pointer"
