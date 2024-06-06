@@ -23,7 +23,6 @@ const Login = () => {
         method: "post",
         data: user,
       });
-      // console.log("Resuult--------------<>",result);
 
       if (result.data.status) {
         toast.success(`${result.message}`);
@@ -42,7 +41,6 @@ const Login = () => {
         Navigate("/home");
       }
     } catch (error) {
-      console.log(error);
       toast.error(`${user.user_type} not created..! Try Again...!`);
     }
   };
@@ -52,10 +50,9 @@ const Login = () => {
       return { ...prev, [name]: value };
     });
   };
-  console.log(user);
 
   return (
-    <div className="flex bg-slate-200 min-h-screen">
+    <div className="flex bg-slate-200 min-h-screen overflow-y-scroll lg:p-10" >
       <div className="bg-loginbg w-[40vw] px-10 md:flex justify-center items-center hidden ">
         <img src="./rentify-logo.svg" />
       </div>
@@ -106,7 +103,7 @@ const Login = () => {
                 <option value="buyer">Buyer</option>
               </select>
             </div>
-            <div className=" bg-white flex items-center border-[1px] border-[#757575] gap-3 p-5">
+            <div className=" bg-white flex items-center  border-[1px] border-[#757575] gap-3 p-5">
               <img src="/icons/lock.svg" />
               <input
                 name="password"
@@ -127,7 +124,17 @@ const Login = () => {
               </span>
             </button>
           </form>
-          <div className="text-center p-4">Already have account ? <Link to="/login">Login</Link> </div>
+          <div className="text-center p-4">Already have account ? <Link to="/login" className="underline">Login</Link> </div>
+          <p className="text-center text-xs text-[#424242] mt-2 font-normal">
+            <span
+              className="text-[#212121] text-sm font-semibold cursor-pointer"
+              onClick={() => {
+                Navigate("/home");
+              }}
+            >
+              Skip SignUp
+            </span>
+          </p>
         </div>
       </div>
     </div>

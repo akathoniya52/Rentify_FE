@@ -26,7 +26,7 @@ function Profile() {
           }
         }
       } catch (error) {
-        console.log("error---------->", error);
+        // console.log("error---------->", error);
         toast.error("Something went wrong...!");
       }
     })();

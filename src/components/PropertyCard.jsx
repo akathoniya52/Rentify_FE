@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 function PropertyCard({ property }) {
   const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem('user'))
   return (
     <div
       className="bg-white rounded-lg shadow-lg p-4 mb-4"
@@ -23,10 +24,10 @@ function PropertyCard({ property }) {
       <p className="text-gray-600 mb-2">Bedrooms: {property.bedrooms}</p>
       <p className="text-gray-600 mb-2">Bathrooms: {property.bathrooms}</p>
       <p className="text-gray-800 font-semibold">${property.price} per month</p>
-      <div className="flex justify-between pt-4 items-center">
+      {user && <div className="flex justify-between pt-4 items-center">
         <div className="cursor-pointer">👍</div>
         <div className="cursor-pointer">Interested ?</div>
-      </div>
+      </div>}
     </div>
   );
 }

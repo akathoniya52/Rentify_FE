@@ -26,7 +26,6 @@ const Login = () => {
         method: "post",
         data: user,
       });
-      console.log("response----->", response);
       if (response.data.status===true) {
         localStorage.setItem("token",response.data.token)
         toast.success("User Logged In SuccessFully.!");

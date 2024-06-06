@@ -39,7 +39,6 @@ function PropertyForm() {
         method: "post",
         data: formData,
       });
-      console.log(result);
 
       if (result.data.status) {
         toast.success("Property post Successfully");
