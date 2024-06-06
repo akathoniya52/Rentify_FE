@@ -2,7 +2,7 @@ import React from "react";
 
 const InputWithLabel = (props) => {
   return (
-    <div class="mb-1">
+    <div className="mb-1">
       <label
         htmlFor="email"
         className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"

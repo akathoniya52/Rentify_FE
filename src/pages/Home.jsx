@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import Navbar from "../components/Navbar";
 import { useDispatch, useSelector } from "react-redux";
 import { setData } from "../redux/PropertiesSlice";
+import Loader from '../components/Loader'
 
 function Home() {
   const properties1 = useSelector((state) => state.propertiesSlice.data);
@@ -23,7 +24,7 @@ function Home() {
             method: "get",
             url: `${import.meta.env.VITE_BACKEND_URL}/properties`,
           });
-          console.log(response.data.properties);
+          // console.log(response.data.properties);
           if (response.data.status) {
             if (response.data.properties.length > 0) {
               setProperties(response.data.properties);
@@ -45,9 +46,8 @@ function Home() {
   return (
     <div className="h-screen overflow-y-scroll">
       <Navbar />
-
+        {loading && <div className="h-full flex justify-center items-center"><Loader/></div>}
       <div className="container mx-auto px-4 py-8 ">
-        {loading && <div>Loading...</div>}
         {!loading && properties.length===0 && <div>No Property Found...!</div>}
         {properties.length >= 0 && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

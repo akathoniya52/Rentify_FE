@@ -8,7 +8,6 @@ import InputWithLabel from "../components/InputWithLabel";
 function PropertyForm() {
   const Navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user"));
-  // const { user_id, title, description, location, area, bedrooms, bathrooms, amenities, price } = req.body;
 
   const [formData, setFormData] = useState({
     user_id: user.user_id,

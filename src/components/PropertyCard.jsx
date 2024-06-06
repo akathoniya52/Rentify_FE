@@ -24,10 +24,10 @@ function PropertyCard({ property }) {
       <p className="text-gray-600 mb-2">Bedrooms: {property.bedrooms}</p>
       <p className="text-gray-600 mb-2">Bathrooms: {property.bathrooms}</p>
       <p className="text-gray-800 font-semibold">${property.price} per month</p>
-      {user && <div className="flex justify-between pt-4 items-center">
-        <div className="cursor-pointer">👍</div>
-        <div className="cursor-pointer">Interested ?</div>
-      </div>}
+      {user && <p className="flex justify-between pt-4 items-center">
+        <p className="cursor-pointer">👍</p>
+        <p className="cursor-pointer">Interested ?</p>
+      </p>}
     </div>
   );
 }
