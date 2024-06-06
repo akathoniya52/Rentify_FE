@@ -11,7 +11,7 @@ const Property = () => {
   useEffect(() => {
     const getProperty = async (id) => {
       const response = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/property/${params.id}`
+        `${import.meta.env.VITE_BACKEND_URL}/property/${id}`
       );
       if (response.status === 200) {
         toast.success("Property get success..!");
